@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+:root {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: white;
+}
+
+::selection {
+  background-color: #f8ff25;
+  color: black
+}
+
+body {
+  @apply bg-gray-900 font-body;
+}
+
+@theme {
+  --font-fancy: "Old Standard TT", serif;
+  --font-body: "Roboto", sans-serif;
+  --font-display: "Exo 2", sans-serif
+}
