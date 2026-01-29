@@ -1,83 +1,146 @@
-import { useState } from "react"
+import { useReducer } from "react"
 import TodoItem from "./TodoItem";
 import {Plus, Rabbit, Trash} from 'lucide-react';
 
 const TodoPage = () => {
-    const [todos, setTodos] = useState([]);
+    const compareFunction = (a, b) => a.text.localeCompare(b.text);
+    const ACTION_TYPES = {
+        'ADD_TODO': 'ADD_TODO',
+        'TOGGLE_TODO': 'TOGGLE_TODO',
+        'DELETE_TODO': 'DELETE_TODO',
+        'DELETE_ALL_TODO': 'DELETE_ALL_TODO',
+        'UPDATE_TODO': 'UPDATE_TODO',
+        'MOVE_TODO_UP': 'MOVE_TODO_UP',
+        'MOVE_TODO_DOWN': 'MOVE_TODO_DOWN',
+        'SORT_TODO': 'SORT_TODO',
+    }
+    const [todolist, dispatcher] = useReducer(reducerFunc, []);
     const emptyState = <div className="mt-18 flex flex-col gap-4 items-center text-secondary-text">
         <Rabbit size={40}/>
         <p>Your Todo's are empty</p>
     </div>
-    const completedTodos = todos.filter((item) => item.completed == true);
-    const compareFunction = (a, b) => a.text.localeCompare(b.text);
-    const isTodoEmpty = todos.length == 0;
-    const isTodoSorted = todos.every((todo, index, arr) => {
+    const completedTodos = todolist.filter((item) => item.completed == true);
+    const isTodoEmpty = todolist.length == 0;
+    const isTodoSorted = todolist.every((todo, index, arr) => {
         return index===0 || compareFunction(arr[index-1], todo) <= 0;
     })
 
+    function reducerFunc(prevState, action) {
+        switch(action.type) {
+            case ACTION_TYPES.ADD_TODO:
+                const text = action.payload;
+                const newTodo = {
+                    text,
+                    id: crypto.randomUUID(),
+                    completed: false
+                }
+
+                return [...prevState, newTodo];
+            case ACTION_TYPES.TOGGLE_TODO:
+                return prevState.map((item) => {
+                    if(item.id == action.payload.id){
+                        return {...item, completed: action.payload.checked}
+                    }
+                    return item;
+                })
+            case ACTION_TYPES.DELETE_TODO:
+                return prevState.filter((item) => item.id !== action.payload.id);
+            case ACTION_TYPES.DELETE_ALL_TODO:
+                return ([])
+            case ACTION_TYPES.UPDATE_TODO:
+                return prevState.map((item) => {
+                    if(item.id === action.payload.id){
+                        return {...item, text: action.payload.todoText}
+                    }
+                    return item;
+                })
+            case ACTION_TYPES.MOVE_TODO_UP:
+                const newTodosUp = [...prevState];
+                [newTodosUp[action.payload.index], newTodosUp[action.payload.index-1]] = [newTodosUp[action.payload.index-1], newTodosUp[action.payload.index]]
+                return newTodosUp;
+            case ACTION_TYPES.MOVE_TODO_DOWN:
+                const newTodosDown = [...prevState];
+                [newTodosDown[action.payload.index], newTodosDown[action.payload.index+1]] = [newTodosDown[action.payload.index+1], newTodosDown[action.payload.index]]
+                return newTodosDown;
+            case ACTION_TYPES.SORT_TODO:
+                const newTodos = [...prevState];
+                newTodos.sort(compareFunction);
+                return newTodos;
+            default:
+                break;
+        }
+    }
     function handleFormSubmit(e) {
         e.preventDefault();
         const todoText = e.target["todo"].value;
         if(!todoText) return;
 
-        const updatedTodos = [...todos, {
-            text: todoText,
-            id: crypto.randomUUID(),
-            completed: false
-        }];
-        setTodos(updatedTodos);
+        dispatcher({
+            type: ACTION_TYPES.ADD_TODO,
+            payload: todoText,
+        })
 
         e.target.reset();
     }
 
     function onTodoToggle(id, checked) {
-        const newTodos = todos.map((item) => {
-            if(item.id == id){
-                return {...item, completed: checked}
+        dispatcher({
+            type: ACTION_TYPES.TOGGLE_TODO,
+            payload: {
+                id, checked
             }
-            return item;
         })
-        setTodos(newTodos);
     }
 
     function handleDeleteTodo(id) {
-        const newTodos = todos.filter((item) => item.id !== id);
-        setTodos(newTodos);
+        dispatcher({
+            type: ACTION_TYPES.DELETE_TODO,
+            payload: {
+                id
+            }
+        })
     }
 
     function handleDeletedAll() {
-        setTodos([]);
+        dispatcher({
+            type: ACTION_TYPES.DELETE_ALL_TODO,
+        })
     }
 
     function handleSortTodos() {
-        const newTodos = [...todos];
-        newTodos.sort(compareFunction);
-        setTodos(newTodos);
+        dispatcher({
+            type: ACTION_TYPES.SORT_TODO,
+        })
     }
 
     function handleUpdateTodoText(id, todoText) {
         if(!todoText) return;
-        const newTodo = todos.map((item) => {
-            if(item.id === id){
-                return {...item, text: todoText}
+        dispatcher({
+            type: ACTION_TYPES.UPDATE_TODO,
+            payload: {
+                id, todoText
             }
-            return item;
         })
-        setTodos(newTodo);
     }
 
     function handleTodoMoveUp(index) {
         if(index==0) return;
-        const newTodos = [...todos];
-        [newTodos[index], newTodos[index-1]] = [newTodos[index-1], newTodos[index]]
-        setTodos(newTodos);
+        dispatcher({
+            type: ACTION_TYPES.MOVE_TODO_UP,
+            payload: {
+                index
+            }
+        })
     }
 
     function handleTodoMoveDown(index) {
-        if(index==todos.length-1) return;
-        const newTodos = [...todos];
-        [newTodos[index], newTodos[index+1]] = [newTodos[index+1], newTodos[index]]
-        setTodos(newTodos);
+        if(index==todolist.length-1) return;
+        dispatcher({
+            type: ACTION_TYPES.MOVE_TODO_DOWN,
+            payload: {
+                index
+            }
+        })
     }
 
     return (
@@ -107,13 +170,13 @@ const TodoPage = () => {
 
         {!isTodoEmpty && (
             <p className="text-secondary-text text-right my-10">
-                {completedTodos.length} / {todos.length} Completed
+                {completedTodos.length} / {todolist.length} Completed
             </p>
         )}
 
         {!isTodoEmpty ? (
           <div className="space-y-4">
-            {todos.map((item, index) => (
+            {todolist.map((item, index) => (
               <TodoItem
                 key={item.id}
                 item={item}
@@ -123,7 +186,7 @@ const TodoPage = () => {
                 onMoveUp={handleTodoMoveUp}
                 onMoveDown={handleTodoMoveDown}
                 index={index}
-                todosCount={todos.length}
+                todosCount={todolist.length}
               />
             ))}
           </div>
