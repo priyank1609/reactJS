@@ -36,8 +36,8 @@ function App() {
         <Dashboard /> */}
         {/* <LearnCustomHook /> */}
         {/* <LearnAxios /> */}
-        {/* <CreatePost /> */}
-        <WrapperReactQuery />
+        <CreatePost />
+        {/* <WrapperReactQuery /> */}
       </>
 
     // <AuthContext.Provider value={{user, setUser}}>
