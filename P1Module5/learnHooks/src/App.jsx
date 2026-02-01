@@ -6,6 +6,11 @@ import LearnUseId from "./3_useId/LearnUseId"
 import LearnUseRef from "./4_useRef/LearnUseRef"
 import Dashboard from "./5_useContext/dashboard"
 import { AuthProvider } from "./5_useContext/auth-context"
+import LearnCustomHook from "./6_customHook/LearnCustomHook"
+import LearnAxios from "./7_axiosLibrary/learnAxios"
+import CreatePost from "./7_axiosLibrary/createPost"
+import LearnReactQuery from "./8_learnReactQuery/LearnReactQuery"
+import WrapperReactQuery from "./8_learnReactQuery/wrapperReactQuery"
 
 function App() {
   const [user, setUser] = useState({
@@ -21,18 +26,32 @@ function App() {
   }
 
   return (
-    // <AuthContext.Provider value={{user, setUser}}>
-    <AuthProvider value={{user, setUser}}>
-      <>
+    <>
         {/* <LearnUseReducer /> */}
         {/* <LearnUseEffects /> */}
         {/* <LearnUseId /> */}
         {/* <LearnUseRef /> */}
         {/* <LearnUseRef2 /> */}
-        <button onClick={handleToggleName}>Toggle Name in App</button>
-        <Dashboard />
+        {/* <button onClick={handleToggleName}>Toggle Name in App</button>
+        <Dashboard /> */}
+        {/* <LearnCustomHook /> */}
+        {/* <LearnAxios /> */}
+        {/* <CreatePost /> */}
+        <WrapperReactQuery />
       </>
-    </AuthProvider>
+
+    // <AuthContext.Provider value={{user, setUser}}>
+    // <AuthProvider value={{user, setUser}}>
+    //   <>
+    //     {/* <LearnUseReducer /> */}
+    //     {/* <LearnUseEffects /> */}
+    //     {/* <LearnUseId /> */}
+    //     {/* <LearnUseRef /> */}
+    //     {/* <LearnUseRef2 /> */}
+    //     {/* <button onClick={handleToggleName}>Toggle Name in App</button>
+    //     <Dashboard /> */}
+    //   </>
+    // </AuthProvider>
     // </AuthContext.Provider>
   )
 }
