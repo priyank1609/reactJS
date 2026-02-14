@@ -1,14 +1,18 @@
 import React from 'react'
-import { Link, useNavigate } from 'react-router'
+import { Link, Navigate, useNavigate } from 'react-router'
 
 const Home = () => {
     const navigate = useNavigate();
+    const shouldRedirect = false;
 
     function handleBtnClick() {
-        navigate("/dashboard", {
-            replace: true
+        navigate("dashboard", {
+            replace: true,
+            relative: true
         })
     }
+
+    if(shouldRedirect) return <Navigate to={"/dashboard"} />
 
     return (
         <div>
