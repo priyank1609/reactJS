@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import ProductCard from '../components/product-card';
+import ProductCard from '../../components/product-card';
 import axios from 'axios';
 import { useLocation, useSearchParams } from 'react-router';
 

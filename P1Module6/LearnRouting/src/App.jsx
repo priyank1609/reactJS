@@ -1,15 +1,15 @@
 import { BrowserRouter, Route, Routes } from "react-router";
-import Users from "./dashboard/Users";
-import DashboardHome from "./dashboard/dashboard-home";
-import Home from "./home";
-import About from "./about";
-import ProtectedRoutes from "./components/protected-routes";
 import { lazy, Suspense } from "react";
-import Loader from "./loader";
-const Login = lazy(() => import("./login"));
-const Dashboard = lazy(() => import("./dashboard/Dashboard"));
-const Products = lazy(() => import("./dashboard/Products"));
-const ProductDetail = lazy(() => import("./dashboard/product-detail"));
+import Loader from "./components/loader";
+import ProtectedRoutes from "./components/protected-routes";
+import About from "./layouts/about/about";
+import Home from "./layouts/home";
+import DashboardHome from "./layouts/dashboard/dashboard-home";
+import Users from "./layouts/dashboard/Users";
+const Login = lazy(() => import("./layouts/login"));
+const Dashboard = lazy(() => import("./layouts/dashboard/Dashboard"));
+const Products = lazy(() => import("./layouts/dashboard/Products"));
+const ProductDetail = lazy(() => import("./layouts/dashboard/product-detail"));
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
           <Route path="" element={<Home />} />
           <Route path="about" element={<About />} />
           <Route path="login" element={<Login />} />
-    
+
           <Route element={<ProtectedRoutes />}>
             <Route path="about" element={<About />} />
             <Route path="dashboard" element={<Dashboard />} >
@@ -29,7 +29,7 @@ function App() {
               <Route path="products/:id/:title?" element={<ProductDetail />} />
             </Route>
           </Route>
-    
+
           <Route path="*" element={<p>Not Found 404</p>} />
         </Routes>
       </Suspense>

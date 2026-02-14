@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useState } from 'react'
-const AboutMe = lazy(() => import('./about-me.jsx'))
+const AboutMe = lazy(() => import('./about-me'))
 
 const About = () => {
   const [show, setShow] = useState(false);

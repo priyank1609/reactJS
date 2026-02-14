@@ -1,6 +1,6 @@
 import React from 'react'
 import { Navigate, useLocation, useNavigate } from 'react-router'
-import { useAuth } from './providers/with-auth-provider';
+import { useAuth } from '../providers/with-auth-provider';
 
 const Login = () => {
   const location = useLocation();
