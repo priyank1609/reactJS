@@ -5,6 +5,7 @@ import { useLocation, useSearchParams } from 'react-router';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
+  const [error, setError] = useState(null);
   const [params, setParams] = useSearchParams();
   const query = params.get('query');
   const location = useLocation();
@@ -12,13 +13,20 @@ const Products = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await axios("https://dummyjson.com/products/search?q="+query);
-      const data = response.data;
-      setProducts(data.products);
+      try {
+        const response = await axios("https://dummyjson.com/products/search?q="+query);
+        const data = response.data;
+        setProducts(data.products);
+      } catch (error) {
+        console.log(`Error Occured: ${error}`)
+        setError(error);
+      }
     }
 
     fetchData();
-  }, [query])
+  }, [query]);
+
+  if(error) throw new Error(error);
 
   function onQuerySubmit(formData) {
     const data = Object.fromEntries(formData);

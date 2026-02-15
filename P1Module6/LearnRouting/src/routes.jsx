@@ -8,6 +8,8 @@ import Users from './layouts/dashboard/Users'
 import Products from './layouts/dashboard/Products'
 import ProductDetail from './layouts/dashboard/product-detail'
 import Loader from './components/loader.jsx'
+import ErrorPage from './components/error-page.jsx'
+import MyErrorBoundary2 from './components/my-beautiful-error-boundary.jsx'
 
 {/* <BrowserRouter>
       <Suspense fallback={<Loader message="Global Loading...." />}>
@@ -46,7 +48,7 @@ const AppRouter = () => {
     //     {path: "*", element: <p>Not Found 404</p>}
     // ])
     const router = createBrowserRouter(createRoutesFromElements(
-        <Route hydrateFallbackElement = {<Loader />}>
+        <Route errorElement={<MyErrorBoundary2 />} hydrateFallbackElement = {<Loader />}>
             <Route 
                 index
                 lazy={() => 
@@ -67,7 +69,7 @@ const AppRouter = () => {
               <Route path="dashboard" element={<Dashboard />} >
                 <Route index element={<DashboardHome />}/>
                 <Route path="users" element={<Users />} />
-                <Route path="products" element={<Products />} />
+                <Route path="products" errorElement={<MyErrorBoundary2 />} element={<Products />} />
                 <Route path="products/:id/:title?" element={<ProductDetail />} />
               </Route>
             </Route>
