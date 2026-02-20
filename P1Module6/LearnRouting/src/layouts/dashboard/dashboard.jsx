@@ -1,7 +1,11 @@
 import React from 'react'
-import { Link, NavLink, Outlet } from 'react-router'
+import { Link, NavLink, Outlet, useNavigation } from 'react-router'
+import Loader from '../../components/loader';
 
 const Dashboard = () => {
+    const navigation = useNavigation();
+    if(navigation.state === 'loading') return <Loader />
+
     return (
         <div className='bg-gray-900 text-white p-4 min-h-screen'>
             <h1 className='text-2xl font-semibold text-yellow-300'>
