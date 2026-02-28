@@ -24,6 +24,12 @@ import ShowCachedPostsCount from './MutationAndQueryClient/ShowCachedPostsCount.
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AddPost from './MutationAndQueryClient/AddPost.jsx'
 import PostsList from './MutationAndQueryClient/PostsList.jsx'
+import RoutesIntroApp from './Examples/RoutesIntroApp.jsx'
+import ReactRouterNavigation from './Examples/ReactRouterNavigation.jsx'
+import DynamicRoutes from './Examples/DynamicRoutes.jsx'
+import ProtectedRoutes from './Examples/ProtectedRoutes.jsx'
+import LazyLoadingApp from './Examples/LazyLoadingAndSplitting/LazyLoadingApp.jsx'
+import ReactRouterv7 from './Examples/ReactRouterv7.jsx'
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById('root')).render(
@@ -47,10 +53,16 @@ createRoot(document.getElementById('root')).render(
     {/* <UserAuthUseCase /> */}
     {/* <CustomHook /> */}
     {/* <CustomHookDataFecthing /> */}
-    <QueryClientProvider client={queryClient}>
+    {/* <QueryClientProvider client={queryClient}>
       <PostsList />
       <AddPost />
       <ShowCachedPostsCount />
-    </QueryClientProvider>
+    </QueryClientProvider> */}
+    {/* <RoutesIntroApp /> */}
+    {/* <ReactRouterNavigation /> */}
+    {/* <DynamicRoutes /> */}
+    {/* <ProtectedRoutes /> */}
+    {/* <LazyLoadingApp /> */}
+    <ReactRouterv7 />
   </StrictMode>,
 )
