@@ -9,7 +9,7 @@ const LearnSlots = () => {
             <Card
                 header={
                     <>
-                        <div className="bg-gradient-to-br to-amber-600 size-8 rounded-full"></div>
+                        <div className="bg-linear-to-br to-amber-600 size-8 rounded-full"></div>
                         <h3 className="text-xl">React Design Patterns</h3>
                     </>
                 }
@@ -43,7 +43,7 @@ const LearnSlots = () => {
             <Card
                 header={
                     <>
-                        <div className="bg-gradient-to-br to-amber-600 size-8 rounded-full"></div>
+                        <div className="bg-linear-to-br to-amber-600 size-8 rounded-full"></div>
                         <h1>This is a good Card</h1>
                     </>
                 }
