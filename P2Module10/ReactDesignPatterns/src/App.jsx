@@ -4,6 +4,7 @@ import ControlPropsForm from "./2_LearnControlProps/control-props-form"
 import LearnSlots from "./3_LearnSlots/LearnSlots"
 import LearnComposition from "./4_LearnComposition/Learn-Composition"
 import LearnHOC from "./5_LearnHOC/Learn-Hoc"
+import LearnRenderProps from "./6_LearnRenderProps/LearnRenderProps"
 
 function App() {
   return (
@@ -13,7 +14,8 @@ function App() {
       {/* <ControlPropsForm /> */}
       {/* <LearnSlots /> */}
       {/* <LearnComposition /> */}
-      <LearnHOC />
+      {/* <LearnHOC /> */}
+      <LearnRenderProps />
     </>
   )
 }
