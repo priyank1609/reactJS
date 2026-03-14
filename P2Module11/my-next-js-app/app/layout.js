@@ -1,3 +1,4 @@
+import Link from "next/link";
 import "./globals.css";
 
 export const metadata = {
@@ -9,7 +10,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        {children}
+        <div className="border border-yellow-300 p-4">
+          <nav className="flex gap-4">
+            <Link href={'/'} className="px-4 py-2 bg-blue-500 rounded-lg hover:bg-blue-400">Home</Link>
+            <Link href={'/products'} className="px-4 py-2 bg-blue-500 rounded-lg hover:bg-blue-400">Products</Link>
+            <Link href={'/todos'} className="px-4 py-2 bg-blue-500 rounded-lg hover:bg-blue-400">Todos</Link>
+          </nav>
+          {children}
+        </div>
       </body>
     </html>
   );
